@@ -1,0 +1,36 @@
+{% extends 'base/home.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4 text-primary">Demande de réservation</h2>
+                    <hr>
+                    <div class="alert alert-info">
+                        <i class="fas fa-home me-2"></i> Vous demandez la location de : <strong>{{ bien.Titre }}</strong>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Laissez un message à l'administrateur (Optionnel) :</label>
+                            <textarea name="message" class="form-control" rows="4" placeholder="Ex: Je souhaite visiter ce bien samedi prochain..."></textarea>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'biens' %}" class="btn btn-outline-secondary">Annuler</a>
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="fas fa-paper-plane me-2"></i>Envoyer ma demande
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer bg-light p-3 text-center">
+                    <small class="text-muted">Votre demande sera examinée par l'admin. Vous recevrez une réponse prochainement.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
