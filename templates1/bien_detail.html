@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ bien.Titre }} - Détails</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #1a1d21; color: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+        .detail-card { background: #2c3136; border-radius: 20px; border: 1px solid #3d444b; overflow: hidden; }
+        .main-img { height: 500px; object-fit: cover; border-radius: 15px; }
+        .price-tag { font-size: 2rem; font-weight: 800; color: #3498db; }
+        .btn-rent { background: #27ae60; color: white; font-weight: 700; border-radius: 12px; padding: 15px; transition: 0.3s; }
+        .btn-rent:hover { background: #2ecc71; transform: scale(1.02); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <a href="{% url 'biens' %}" class="btn btn-outline-light mb-4"><i class="fa-solid fa-arrow-left me-2"></i>Retour au catalogue</a>
+
+    <div class="row g-5">
+        <div class="col-lg-7">
+            <div id="carouselDetail" class="carousel slide shadow" data-bs-ride="carousel">
+                <div class="carousel-inner rounded-4">
+                    {% for img in bien.images.all %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <img src="{{ img.image.url }}" class="d-block w-100 main-img" alt="Photo">
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselDetail" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselDetail" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="p-4 detail-card h-100">
+                <span class="text-info fw-bold text-uppercase small">{{ bien.Type }}</span>
+                <h1 class="fw-bold mt-2">{{ bien.Titre }}</h1>
+                <p class="text-muted"><i class="fa-solid fa-map-marker-alt me-2"></i>{{ bien.Adresse }}</p>
+                
+                <hr class="border-secondary">
+                
+                <h5 class="fw-bold">Description complète</h5>
+                <p style="line-height: 1.8; color: #adb5bd;">{{ bien.Description|linebreaks }}</p>
+
+                <div class="mt-auto pt-4">
+                    <div class="price-tag mb-3">{{ bien.Prix }} <small>DH/mois</small></div>
+                    
+                   {% if bien.Statut == "Disponible" or bien.Statut == "disponible" %}
+    <a href="{% url 'louer_bien' bien.id %}" class="btn btn-rent w-100 fs-5 shadow-sm text-center">
+        <i class="fa-solid fa-key me-2"></i>LOUER CE BIEN MAINTENANT
+    </a>
+{% else %}
+    <button class="btn btn-secondary w-100 fs-5" disabled>DÉJÀ LOUÉ</button>
+{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
