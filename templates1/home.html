@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- CAROUSEL (Les images qui bougent) -->
+<div id="carouselImmobilier" class="carousel slide mb-5 shadow-lg" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselImmobilier" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#carouselImmobilier" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#carouselImmobilier" data-bs-slide-to="2"></button>
+    </div>
+
+    <div class="carousel-inner rounded-4">
+        <div class="carousel-item active">
+            <img src="{% static 'base/image/ima1.jpg' %}" class="d-block w-100" style="height:500px; object-fit:cover; opacity: 0.7;">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="display-4 fw-bold">Trouvez votre bien idéal</h2>
+                <p class="fs-5">Des appartements de luxe au cœur de la ville.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'base/image/ima2.jpg' %}" class="d-block w-100" style="height:500px; object-fit:cover; opacity: 0.7;">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="display-4 fw-bold">Gestion Simplifiée</h2>
+                <p class="fs-5">Suivez vos contrats et paiements en un clic.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'base/image/ima3.jpg' %}" class="d-block w-100" style="height:500px; object-fit:cover; opacity: 0.7;">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="display-4 fw-bold">Espace Client Sécurisé</h2>
+                <p class="fs-5">Inscrivez-vous pour envoyer vos demandes de location.</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselImmobilier" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselImmobilier" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<!-- SECTION ACTIONS (En bas du carousel) -->
+<div class="container text-center py-4">
+    <h1 class="page-header-title mb-3">Bienvenue sur GestionImmo</h1>
+    <p class="lead text-secondary mb-5">La plateforme de référence pour votre gestion immobilière.</p>
+
+    {% if not user.is_authenticated %}
+        <!-- BOUTONS POUR LES NOUVEAUX VISITEURS -->
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'inscription' %}" class="btn btn-info btn-lg px-5 shadow">
+                <i class="fas fa-user-plus me-2"></i>S'inscrire
+            </a>
+            <a href="{% url 'mon_login' %}" class="btn btn-outline-light btn-lg px-5">
+                <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+            </a>
+        </div>
+    {% else %}
+        <!-- BOUTON POUR LE CLIENT CONNECTÉ -->
+        <div class="card bg-dark border-secondary p-4 d-inline-block shadow-lg">
+            <h3 class="text-info mb-4">Content de vous revoir, {{ user.username }} !</h3>
+            <a href="{% url 'biens' %}" class="btn btn-info btn-lg px-5">
+                <i class="fas fa-search me-2"></i>Explorer le catalogue
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
