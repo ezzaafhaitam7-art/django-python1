@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Locataires</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #1a1d21; color: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+        .admin-card { background: #2c3136; border-radius: 15px; border: 1px solid #3d444b; padding: 25px; }
+        .table { color: #f8f9fa; border-color: #4f575f; }
+        .table thead { background: #111417; }
+        .btn-action { padding: 5px 10px; border-radius: 8px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold"><i class="fa-solid fa-users text-info me-3"></i>Liste des Locataires</h2>
+        <a href="{% url 'biens' %}" class="btn btn-outline-light btn-sm">Retour</a>
+    </div>
+
+    <div class="admin-card shadow">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Nom Complet</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for locataire in locataires %}
+                <tr>
+                    <td>{{ locataire.nom }} {{ locataire.prenom }}</td>
+                    <td>{{ locataire.email }}</td>
+                    <td>{{ locataire.telephone }}</td>
+                    <td class="text-center">
+                        <button class="btn btn-action btn-outline-info me-1"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-action btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="text-center text-muted">Aucun locataire enregistré.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
