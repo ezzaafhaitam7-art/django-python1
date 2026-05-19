@@ -1,0 +1,113 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card bg-dark text-white shadow-lg border-secondary mt-4 mb-5">
+            <div class="card-header border-secondary text-center py-4 bg-black bg-opacity-25">
+                <h2 class="text-info fw-bold mb-0">Création de Compte Client</h2>
+                <p class="text-secondary small mt-2">Veuillez remplir vos coordonnées pour accéder aux locations</p>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <!-- SECTION 1 : IDENTIFIANTS -->
+                    <div class="mb-4">
+                        <h5 class="text-info border-bottom border-secondary pb-2 mb-3">
+                            <i class="fas fa-user-lock me-2"></i>Identifiants de connexion
+                        </h5>
+                        
+                        {% if form.errors %}
+                            <div class="alert alert-danger py-2 small">
+                                <strong>Erreurs :</strong>
+                                <ul class="mb-0">
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <li>{{ field.label }} : {{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {% for error in form.non_field_errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nom d'utilisateur (Pseudo)</label>
+                            <input type="text" name="username" class="form-control bg-dark text-white border-secondary" 
+                                   placeholder="Choisissez un pseudo" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Mot de passe</label>
+                                <input type="password" name="password1" class="form-control bg-dark text-white border-secondary" 
+                                       placeholder="••••••••" required>
+                                <div class="form-text text-secondary small">8 caractères minimum.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Confirmation</label>
+                                <input type="password" name="password2" class="form-control bg-dark text-white border-secondary" 
+                                       placeholder="••••••••" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2 : COORDONNÉES PERSONNELLES -->
+                    <div class="mb-4">
+                        <h5 class="text-info border-bottom border-secondary pb-2 mb-3">
+                            <i class="fas fa-address-card me-2"></i>Coordonnées personnelles
+                        </h5>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nom et Prénom (Complet)</label>
+                            <input type="text" name="nom_complet" class="form-control bg-dark text-white border-secondary" 
+                                   placeholder="Entrez votre nom tel qu'il figure sur votre CIN" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">N° de CIN</label>
+                                <input type="text" name="cin" class="form-control bg-dark text-white border-secondary" 
+                                       placeholder="Ex: AB123456" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Téléphone Mobile</label>
+                                <input type="text" name="telephone" class="form-control bg-dark text-white border-secondary" 
+                                       placeholder="06XXXXXXXX" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Profession actuelle</label>
+                            <input type="text" name="profession" class="form-control bg-dark text-white border-secondary" 
+                                   placeholder="Ex: Ingénieur, Étudiant, etc." required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Adresse de résidence actuelle</label>
+                            <textarea name="adresse" class="form-control bg-dark text-white border-secondary" 
+                                      rows="2" placeholder="Votre adresse complète..." required></textarea>
+                        </div>
+                        <div class="mb-3">
+    <label class="form-label fw-bold text-info">Date de naissance</label>
+    <input type="date" name="date_naissance" class="form-control bg-dark text-white border-secondary" required>
+</div>
+                    </div>
+
+                    <div class="d-grid mt-5">
+                        <button type="submit" class="btn btn-info btn-lg fw-bold shadow text-uppercase">
+                            Valider mon inscription
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer border-secondary text-center py-3 bg-black bg-opacity-10">
+                <span class="text-secondary">Déjà inscrit ? <a href="{% url 'mon_login' %}" class="text-info text-decoration-none fw-bold">Se connecter ici</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
