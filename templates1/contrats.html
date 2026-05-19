@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Contrats</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #1a1d21; color: #f8f9fa; }
+        .admin-card { background: #2c3136; border-radius: 15px; border: 1px solid #3d444b; padding: 25px; }
+        .badge-date { background: #3d444b; color: #adb5bd; padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <h2 class="fw-bold mb-4"><i class="fa-solid fa-file-signature text-warning me-3"></i>Contrats de Location</h2>
+    
+    <div class="admin-card shadow">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Bien Immobilier</th>
+                    <th>Locataire</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+    {% for contrat in contrats %}
+    <tr>
+        <td class="fw-bold">{{ contrat.bien.Titre }}</td>
+        <td>{{ contrat.locataire.nom }}</td>
+        <td><span class="badge-date">{{ contrat.date_debut|date:"d/m/Y" }}</span></td>
+        <td><span class="badge-date">{{ contrat.date_fin|date:"d/m/Y" }}</span></td>
+        <td><span class="badge bg-success">Actif</span></td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5" class="text-center text-secondary py-4">Aucun contrat actif pour le moment.</td>
+    </tr>
+    {% endfor %}
+</tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
