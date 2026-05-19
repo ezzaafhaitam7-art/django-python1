@@ -1,0 +1,37 @@
+{% extends 'base/home.html' %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Mes demandes de location</h2>
+    <table class="table table-hover shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Bien</th>
+                <th>Date</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in demandes %}
+            <tr>
+                <td>{{ d.bien.Titre }}</td>
+                <td>{{ d.date_demande|date:"d/m/Y" }}</td>
+                <td>
+                    {% if d.statut == 'En attente' %}
+                        <span class="badge bg-warning text-dark">{{ d.statut }}</span>
+                    {% elif d.statut == 'Acceptée' %}
+                        <span class="badge bg-success">{{ d.statut }}</span>
+                    {% else %}
+                        <span class="badge bg-danger">{{ d.statut }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">Vous n'avez pas encore fait de demande.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'biens' %}" class="btn btn-primary">Voir plus de biens</a>
+</div>
+{% endblock %}
