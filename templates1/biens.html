@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="page-header-title m-0">Catalogue des Biens</h1>
+        <span class="text-muted fw-bold">{{ biens.count }} unités disponibles</span>
+    </div>
+
+    <div class="row">
+        {% for bien in biens %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 card-property shadow">
+                
+                {% if bien.Statut == "Disponible" or bien.Statut == "disponible" %}
+                    <span class="badge badge-status bg-success">Disponible</span>
+                {% else %}
+                    <span class="badge badge-status bg-danger">Loué</span>
+                {% endif %}
+
+                <!-- CAROUSEL DES IMAGES -->
+                <div id="carousel{{ bien.id }}" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for img in bien.images.all %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img src="{{ img.image.url }}" class="d-block w-100" style="height:240px; object-fit:cover;">
+                        </div>
+                        {% empty %}
+                        <div class="carousel-item active">
+                            <img src="https://via.placeholder.com/400x240/2c3136/adb5bd?text=Pas+d'image" class="d-block w-100">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="card-body d-flex flex-column p-4">
+                    <span class="property-type text-info">{{ bien.Type }}</span>
+                    <h5 class="property-title mt-1">{{ bien.Titre }}</h5>
+                    <p class="property-location mb-3">
+                        <i class="fa-solid fa-map-marker-alt me-2 text-info"></i>{{ bien.Adresse }}
+                    </p>
+                    <div class="property-price mt-auto">
+                        {{ bien.Prix }} <span>DH</span>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-transparent border-0 px-4 pb-4">
+                    <a href="{% url 'bien_detail' bien.id %}" class="btn btn-view-details w-100">
+                        <i class="fa-solid fa-circle-info me-2"></i>Consulter
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <h4 class="text-muted">Aucun bien immobilier disponible.</h4>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
