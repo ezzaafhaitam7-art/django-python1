@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+        <div class="card shadow-lg border-0 mt-5 p-5">
+            <div class="mb-4">
+                <i class="fas fa-check-circle text-success fa-5x"></i>
+            </div>
+            <h2 class="fw-bold text-dark">Félicitations !</h2>
+            <p class="lead text-muted">Votre compte a été créé avec succès.</p>
+            <hr class="my-4">
+            <div class="d-grid gap-3">
+                <a href="{% url 'mon_login' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-sign-in-alt me-2"></i>Se connecter maintenant
+                </a>
+                <a href="/" class="btn btn-outline-secondary">
+                    Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
